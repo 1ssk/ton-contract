@@ -11,7 +11,7 @@ describe('FirstContract', () => {
     beforeEach(async () => {
         blockchain = await Blockchain.create();
 
-        firstContract = blockchain.openContract(await FirstContract.fromInit());
+        firstContract = blockchain.openContract(await FirstContract.fromInit(1000n));
 
         deployer = await blockchain.treasury('deployer');
 

@@ -6,9 +6,12 @@ message Add {
 
 contract FirstContract with Deployable {
 
+    id: Int as uint32;
     counter: Int as uint32;
+    
 
-    init() {
+    init(id: Int) {
+        self.id = id;
         self.counter = 0;
     }
 
@@ -22,6 +25,10 @@ contract FirstContract with Deployable {
 
     get fun counter(): Int {
         return self.counter;
+    }
+
+    get fun id(): Int{
+        return self.id;
     }
 
 }
