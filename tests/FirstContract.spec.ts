@@ -38,4 +38,50 @@ describe('FirstContract', () => {
         // the check is done inside beforeEach
         // blockchain and firstContract are ready to use
     });
+
+    it("should increase", async ()=>{
+        const counterBefore = await firstContract.getCounter()
+
+        console.log("counterBefore - ", counterBefore)
+
+        await firstContract.send(
+            deployer.getSender(),
+            {
+                value: toNano("0.02")
+            },
+            'increment'
+        )
+
+        const counterAfter = await firstContract.getCounter()
+
+        console.log("counter - ", counterAfter)
+
+        expect(counterBefore).toBeLessThan(counterAfter)
+    })
+
+    it("should increase amount", async ()=>{
+        const counterBefore = await firstContract.getCounter()
+        
+        const amount = 5n;
+
+        console.log("counterBefore - ", counterBefore)
+
+        await firstContract.send(
+            deployer.getSender(),
+            {
+                value: toNano("0.02")
+            },
+            {
+                $$type: 'Add',
+                amount: amount
+            }
+        )
+
+        const counterAfter = await firstContract.getCounter()
+
+        console.log("counter - ", counterAfter)
+
+        expect(counterBefore).toBeLessThan(counterAfter)
+    })
 });
+

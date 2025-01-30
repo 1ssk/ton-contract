@@ -1,17 +1,7 @@
 import "@stdlib/deploy";
 
-message Deploy {
-    queriId: Int as uint64;
-}
-
-message DeployOk {
-    queriId: Int as uint64;
-}
-
-trait Deployable {
-    receive(deploy: Deploy) {
-        self.notify(DeployOk{queriId: deploy.queriId}.toCell());
-    }
+message Add {
+    amount: Int as uint32;
 }
 
 contract FirstContract with Deployable {
@@ -24,6 +14,10 @@ contract FirstContract with Deployable {
 
     receive("increment"){
         self.counter = self.counter + 1;
+    }
+
+    receive(msg: Add){
+        self.counter = self.counter + msg.amount;
     }
 
     get fun counter(): Int {
